@@ -57,6 +57,7 @@ Enemy.prototype.speedGenerator = function() {
 var playerX = 200;
 var playerY = 400;
 
+// The player character
 var Player = function() {
 	 this.x = playerX;
 	 this.y = playerY;
@@ -118,9 +119,27 @@ Player.prototype.handleInput = function(keyDown) {
 	}
 };
 
+// When called, resets player character to original position.
 Player.prototype.playerReset = function() {
 	this.x = playerX;
 	this.y = playerY;
+};
+
+// Creates a gem and places it on a random stone block.
+var Gem = function() {
+	this.x = (Math.floor(Math.random() * 5) + 1) * 100 - 70;
+	this.y = (Math.floor(Math.random() * 3) + 1) * 85 + 55;
+	
+	this.sprite = 'images/small/Gem Blue.png';
+};
+
+// Empty, does not need to update at the moment.
+Gem.prototype.update = function() {
+};
+
+// Draw the gem on the screen.
+Gem.prototype.render = function() {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Now instantiate your objects.
@@ -137,6 +156,9 @@ for (var i = 0; i < 3; i++) {
 
 // Creates the player character.
 var player = new Player();
+
+// Creates the gem.
+var gem = new Gem();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
