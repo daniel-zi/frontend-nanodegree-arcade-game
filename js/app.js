@@ -1,4 +1,11 @@
-// This will be multiplied with a randomy number between 1 and 10 to set the speed of the enemy.
+// Initial score
+var score = 0;
+
+// Boolean values for updating the score.
+var up = false;
+var collide = false;
+
+// This will be multiplied with a random number between 1 and 10 to set the speed of the enemy.
 // Change this number to increase or lower difficulty.
 var speedMultiply = 80;
 
@@ -35,9 +42,11 @@ Enemy.prototype.update = function(dt) {
 	var enemyLeft = this.x - 50;
 	var enemyRight = this.x + 50;
 	
-	// Resets the player character if it touches any of the enemy edges.
+	// Detects if the player character is touching any of the enemy edges.
+    // Updates score and resets with updateScore() if it does.
 	if (player.y > enemyUp && player.y < enemyDown && player.x > enemyLeft && player.x < enemyRight) {
-		player.playerReset();
+	    collide = true;
+	    updateScore();
 	}
 };
 
@@ -61,7 +70,7 @@ var playerY = 400;
 var Player = function() {
 	 this.x = playerX;
 	 this.y = playerY;
-	 
+	
 	 this.sprite = 'images/char-boy.png';
 };
 
@@ -72,6 +81,10 @@ Player.prototype.update = function() {
 // Draw the player on the screen.
 Player.prototype.render = function() {
 	 ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+   
+     ctx.font = '30pt Courier New';
+     ctx.fillStyle = 'orange';
+     ctx.fillText('Score' + ' ' + score , 0, 30);
 };
 
 // Moves the player character.
@@ -80,11 +93,12 @@ Player.prototype.handleInput = function(keyDown) {
 	var moveHorizontal = 100;
 	
 	// Moves the player character and makes sure it doesn't go out of bounds.
-	// If moves up in the water, resets the player character to initial position.
+	// If player moves up in the water, updates score and resets with updateScore().
 	// Change these values if another row or column is added to the game.
 	if (keyDown === 'up') {
 		if (this.y === 60) {
-			this.playerReset();
+			up = true;
+			updateScore();
 		}
 		else {
 			this.y -= moveVertical;
@@ -159,6 +173,22 @@ var player = new Player();
 
 // Creates the gem.
 var gem = new Gem();
+
+// Updates the score
+function updateScore() {
+	 ctx.clearRect(0, 0, 500, 500);
+	 if (up === true) {
+		score++;
+		up = false;
+		player.playerReset();
+	 }
+   
+     if (collide === true) {
+		score -= 1;
+		collide = false;
+		player.playerReset();
+	 }
+};
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
