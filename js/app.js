@@ -1,8 +1,15 @@
+// This will be multiplied with a randomy number between 1 and 10 to set the speed of the enemy.
+// Change this number to increase or lower difficulty.
+var speedMultiply = 80;
+
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(enemyX, enemyY, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+	 this.x = enemyX;
+	 this.y = enemyY;
+	 this.speed = speed;
+	 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -14,6 +21,13 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+	 this.x += this.speed * dt;
+	 
+	 // Resets enemy with a new speed after it goes off canvas.
+	 if (this.x > 505) {
+		  this.x = -105;
+		  this.speedGenerator();
+	 }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -21,16 +35,47 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Sets a random speed to the enemy.
+Enemy.prototype.speedGenerator = function() {
+	 this.speed = speedMultiply * (Math.floor(Math.random() * 10) + 1);
+};
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+var playerX = 200;
+var playerY = 400;
 
+var Player = function() {
+	 this.x = playerX;
+	 this.y = playerY;
+	 
+	 this.sprite = 'images/char-boy.png';
+};
+
+// Empty, does not need to update at the moment.
+Player.prototype.update = function() {
+};
+
+// Draw the player on the screen.
+Player.prototype.render = function() {
+	 ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+var allEnemies = [];
 
+// Sets maximum number of enemies on screen to 3 (number of rows of rock).
+// Be sure to change this if another row of rocks and enemies is to be added.
+for (var i = 0; i < 3; i++) {
+	 var initialSpeed = speedMultiply * (Math.floor(Math.random() * 10) + 1);
+	 allEnemies.push(new Enemy(-105, 55 + 85 * i, initialSpeed));
+}
 
+// Creates the player character.
+var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
