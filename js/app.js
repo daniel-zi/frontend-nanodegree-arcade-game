@@ -28,6 +28,17 @@ Enemy.prototype.update = function(dt) {
 		  this.x = -105;
 		  this.speedGenerator();
 	 }
+	
+	// Sets the edges of the enemy.
+	var enemyUp = this.y - 37 ;
+	var enemyDown = this.y + 37;
+	var enemyLeft = this.x - 50;
+	var enemyRight = this.x + 50;
+	
+	// Resets the player character if it touches any of the enemy edges.
+	if (player.y > enemyUp && player.y < enemyDown && player.x > enemyLeft && player.x < enemyRight) {
+		player.playerReset();
+	}
 };
 
 // Draw the enemy on the screen, required method for game
