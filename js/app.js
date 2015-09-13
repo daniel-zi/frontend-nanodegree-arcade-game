@@ -62,6 +62,56 @@ Player.prototype.render = function() {
 	 ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Moves the player character.
+Player.prototype.handleInput = function(keyDown) {
+	var moveVertical = 85;
+	var moveHorizontal = 100;
+	
+	// Moves the player character and makes sure it doesn't go out of bounds.
+	// If moves up in the water, resets the player character to initial position.
+	// Change these values if another row or column is added to the game.
+	if (keyDown === 'up') {
+		if (this.y === 60) {
+			this.playerReset();
+		}
+		else {
+			this.y -= moveVertical;
+		}
+	}
+	else if (keyDown === 'down') {
+		if (this.y === 400) {
+			return null;
+		}
+		else {
+			this.y += moveVertical;
+		}
+	}
+	else if (keyDown === 'left') {
+		if (this.x === 0) {
+			return null;
+		}
+		else {
+			this.x -= moveHorizontal;
+		}
+	}
+	else if (keyDown === 'right') {
+		if (this.x === 400) {
+			return null;
+		}
+		else {
+			this.x += moveHorizontal;
+		}
+	}
+	else {
+		return null;
+	}
+};
+
+Player.prototype.playerReset = function() {
+	this.x = playerX;
+	this.y = playerY;
+};
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
