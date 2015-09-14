@@ -4,6 +4,7 @@ var score = 0;
 // Boolean values for updating the score.
 var up = false;
 var collide = false;
+var hasBlueGem = false;
 
 // This will be multiplied with a random number between 1 and 10 to set the speed of the enemy.
 // Change this number to increase or lower difficulty.
@@ -19,7 +20,7 @@ var Enemy = function(enemyX, enemyY, speed) {
 	 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = 'images/small/enemy-bug.png';
 };
 
 // Update the enemy's position, required method for game
@@ -37,7 +38,7 @@ Enemy.prototype.update = function(dt) {
 	 }
 	
 	// Sets the edges of the enemy.
-	var enemyUp = this.y - 37 ;
+	var enemyUp = this.y - 37;
 	var enemyDown = this.y + 37;
 	var enemyLeft = this.x - 50;
 	var enemyRight = this.x + 50;
@@ -63,15 +64,15 @@ Enemy.prototype.speedGenerator = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var playerX = 200;
-var playerY = 400;
+var playerX = 219;
+var playerY = 450;
 
 // The player character
 var Player = function() {
 	 this.x = playerX;
 	 this.y = playerY;
 	
-	 this.sprite = 'images/char-boy.png';
+	 this.sprite = 'images/small/char-boy.png';
 };
 
 // Empty, does not need to update at the moment.
@@ -96,7 +97,7 @@ Player.prototype.handleInput = function(keyDown) {
 	// If player moves up in the water, updates score and resets with updateScore().
 	// Change these values if another row or column is added to the game.
 	if (keyDown === 'up') {
-		if (this.y === 60) {
+		if (this.y === 110) {
 			up = true;
 			updateScore();
 		}
@@ -105,7 +106,7 @@ Player.prototype.handleInput = function(keyDown) {
 		}
 	}
 	else if (keyDown === 'down') {
-		if (this.y === 400) {
+		if (this.y === playerY) {
 			return null;
 		}
 		else {
@@ -113,7 +114,7 @@ Player.prototype.handleInput = function(keyDown) {
 		}
 	}
 	else if (keyDown === 'left') {
-		if (this.x === 0) {
+		if (this.x === 19) {
 			return null;
 		}
 		else {
@@ -121,7 +122,7 @@ Player.prototype.handleInput = function(keyDown) {
 		}
 	}
 	else if (keyDown === 'right') {
-		if (this.x === 400) {
+		if (this.x === 419) {
 			return null;
 		}
 		else {
@@ -140,19 +141,34 @@ Player.prototype.playerReset = function() {
 };
 
 // Creates a gem and places it on a random stone block.
-var Gem = function() {
-	this.x = (Math.floor(Math.random() * 5) + 1) * 100 - 70;
-	this.y = (Math.floor(Math.random() * 3) + 1) * 85 + 55;
-	
+var BlueGem = function() {
+	this.setGemLocation();
 	this.sprite = 'images/small/Gem Blue.png';
 };
 
+BlueGem.prototype.setGemLocation = function() {
+    this.x = (Math.floor(Math.random() * 5)) * 100 + 25;
+	this.y = (Math.floor(Math.random() * 3) + 1) * 85 + 60;
+};
+
 // Empty, does not need to update at the moment.
-Gem.prototype.update = function() {
+BlueGem.prototype.update = function() {
+	// Sets the edges of the gem.
+	var blueGemUp = this.y - 37;
+	var blueGemDown = this.y + 37;
+	var blueGemLeft = this.x - 50;
+	var blueGemRight = this.x + 50;
+	
+	// Detects if the player character is touching any of the gem edges.
+	if (player.y > blueGemUp && player.y < blueGemDown && player.x > blueGemLeft && player.x < blueGemRight) {
+	    hasBlueGem = true;
+		this.x = 0;
+		this.y = 600;
+	}
 };
 
 // Draw the gem on the screen.
-Gem.prototype.render = function() {
+BlueGem.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -165,19 +181,27 @@ var allEnemies = [];
 // Be sure to change this if another row of rocks and enemies is to be added.
 for (var i = 0; i < 3; i++) {
 	 var initialSpeed = speedMultiply * (Math.floor(Math.random() * 10) + 1);
-	 allEnemies.push(new Enemy(-105, 55 + 85 * i, initialSpeed));
+	 allEnemies.push(new Enemy(-105, 135 + 85 * i, initialSpeed));
 }
 
 // Creates the player character.
 var player = new Player();
 
 // Creates the gem.
-var gem = new Gem();
+var blueGem = new BlueGem();
 
 // Updates the score
 function updateScore() {
 	 ctx.clearRect(0, 0, 500, 500);
-	 if (up === true) {
+	 if (up === true && hasBlueGem === true) {
+		score += 50;
+		up = false;
+		hasBlueGem = false;
+		player.playerReset();
+		ctx.clearRect(0, 600, 500, 500);
+		blueGem.setGemLocation();
+	 }
+	 else if (up === true) {
 		score++;
 		up = false;
 		player.playerReset();
@@ -186,6 +210,11 @@ function updateScore() {
      if (collide === true) {
 		score -= 1;
 		collide = false;
+		if (hasBlueGem === true) {
+			hasBlueGem = false;
+			ctx.clearRect(0, 600, 500, 500);
+			blueGem.setGemLocation();
+		}
 		player.playerReset();
 	 }
 };
