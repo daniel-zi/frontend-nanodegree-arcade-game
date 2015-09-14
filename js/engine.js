@@ -23,11 +23,12 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
+		div = document.getElementById('frogger'),
         lastTime;
 
     canvas.width = 505;
     canvas.height = 700;
-    doc.body.appendChild(canvas);
+    frogger.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.

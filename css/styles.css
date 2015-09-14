@@ -1,0 +1,98 @@
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    color: #e64a19;
+}
+
+/* Header */
+/* make sure the logo doesn't go any bigger and sets a margin */
+.title-logo {
+    margin-top: 20px;
+    max-height: 100px;
+    max-width: 100px;
+    border: 1px solid black;
+}
+
+.title-super {
+    font-size: 60px;
+    font-weight: 100;
+}
+
+/* makes sure everything looks nice with difference screen sizes */
+@media screen and (max-width: 991px) {
+    .title-super,
+    h4 {
+        display: flex;
+        text-align: left;
+    }
+}
+
+/* changes the color of the navbar links when the mouse hovers */
+#hover-color .link-hover-color:hover {
+    color: #e64a19;
+}
+
+
+/* Content */
+h2 {
+    color: #795548;
+    padding-left: 15px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+p {
+    color: #795548;
+    margin-top: 10px;
+}
+
+a {
+    color: inherit;
+}
+
+.btn:hover {
+    color: #e64a19;
+}
+
+.carousel-placeholder {
+    font-size: 30px;
+}
+
+/* Footer */
+
+/* thickens the horizontal line */
+hr {
+    height: 5px;
+    background-color: #795548;
+}
+
+/* zocial */
+[class*="zocial-"]:before {
+  font-family: 'zocial', sans-serif;
+}
+
+.zocial-github {
+    color: black;
+    font-size: 40px;
+    text-shadow: 2px 2px 2px;
+    margin-left: 15px;
+}
+
+.zocial-github:hover {
+    color: #e64a19;
+    font-size: 40px;
+    text-shadow: 2px 2px 2px;
+    margin-left: 15px;
+}
+
+a:hover {
+    text-decoration: none;
+}
