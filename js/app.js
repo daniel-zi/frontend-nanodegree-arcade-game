@@ -1,10 +1,13 @@
 // Initial score
 var score = 0;
 
+// Value of the gem, this is defined in setGemLocation()
+var gemValue;
+
 // Boolean values for updating the score.
 var up = false;
 var collide = false;
-var hasBlueGem = false;
+var hasGem = false;
 
 // This will be multiplied with a random number between 1 and 10 to set the speed of the enemy.
 // Change this number to increase or lower difficulty.
@@ -141,34 +144,53 @@ Player.prototype.playerReset = function() {
 };
 
 // Creates a gem and places it on a random stone block.
-var BlueGem = function() {
+var Gem = function() {
 	this.setGemLocation();
-	this.sprite = 'images/small/Gem Blue.png';
 };
 
-BlueGem.prototype.setGemLocation = function() {
-    this.x = (Math.floor(Math.random() * 5)) * 100 + 25;
-	this.y = (Math.floor(Math.random() * 3) + 1) * 85 + 60;
+// Sets the location of a gem.
+// Blue will apprea most often, then green, then orange.
+Gem.prototype.setGemLocation = function() {
+	var random = Math.floor(Math.random() * 100) + 1;
+	
+	if (random >= 60) {
+		this.sprite = 'images/small/Gem Blue.png';
+		this.x = (Math.floor(Math.random() * 5)) * 100 + 25;
+		this.y = (Math.floor(Math.random() * 3) + 1) * 85 + 60;
+		gemValue = 20;
+	}
+	else if (random < 60 && random > 10) {
+		this.sprite = 'images/small/Gem Green.png';
+		this.x = (Math.floor(Math.random() * 5)) * 100 + 25;
+		this.y = (Math.floor(Math.random() * 3) + 1) * 85 + 60;
+		gemValue = 50;
+	}
+	else {
+		this.sprite = 'images/small/Gem Orange.png';
+		this.x = (Math.floor(Math.random() * 5)) * 100 + 25;
+		this.y = (Math.floor(Math.random() * 3) + 1) * 85 + 60;
+		gemValue = 100;
+	}
 };
 
-// Empty, does not need to update at the moment.
-BlueGem.prototype.update = function() {
+// Detects if the player has caught a gem.
+Gem.prototype.update = function() {
 	// Sets the edges of the gem.
-	var blueGemUp = this.y - 37;
-	var blueGemDown = this.y + 37;
-	var blueGemLeft = this.x - 50;
-	var blueGemRight = this.x + 50;
+	var gemUp = this.y - 37;
+	var gemDown = this.y + 37;
+	var gemLeft = this.x - 50;
+	var gemRight = this.x + 50;
 	
 	// Detects if the player character is touching any of the gem edges.
-	if (player.y > blueGemUp && player.y < blueGemDown && player.x > blueGemLeft && player.x < blueGemRight) {
-	    hasBlueGem = true;
+	if (player.y > gemUp && player.y < gemDown && player.x > gemLeft && player.x < gemRight) {
+	    hasGem = true;
 		this.x = 0;
 		this.y = 600;
 	}
 };
 
 // Draw the gem on the screen.
-BlueGem.prototype.render = function() {
+Gem.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -188,33 +210,40 @@ for (var i = 0; i < 3; i++) {
 var player = new Player();
 
 // Creates the gem.
-var blueGem = new BlueGem();
+var gem = new Gem();
 
 // Updates the score
 function updateScore() {
 	 ctx.clearRect(0, 0, 500, 500);
-	 if (up === true && hasBlueGem === true) {
-		score += 50;
+	// If the player reaches the water with a gem, update score accordingly.
+	 if (up === true && hasGem === true) {
+		score += gemValue;
 		up = false;
-		hasBlueGem = false;
+		hasGem = false;
 		player.playerReset();
 		ctx.clearRect(0, 600, 500, 500);
-		blueGem.setGemLocation();
+		gem.setGemLocation();
 	 }
+	// If the player reaches the water without a gem, increase score by 1.
 	 else if (up === true) {
 		score++;
 		up = false;
 		player.playerReset();
 	 }
-   
+     
+	 // If player has collision with enemy, reduce score by half of the gem value carrying.
+	 // If not carryin a gem, reduce score by 5.
      if (collide === true) {
-		score -= 1;
-		collide = false;
-		if (hasBlueGem === true) {
-			hasBlueGem = false;
+		if (hasGem === true) {
 			ctx.clearRect(0, 600, 500, 500);
-			blueGem.setGemLocation();
+			score -= gemValue / 2;
+			hasGem = false;
 		}
+		else {
+			score -= 5;
+		}
+		collide = false; 
+		gem.setGemLocation();
 		player.playerReset();
 	 }
 };
