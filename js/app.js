@@ -231,16 +231,16 @@ function updateScore() {
 		player.playerReset();
 	 }
      
-	 // If player has collision with enemy, reduce score by half of the gem value carrying.
-	 // If not carryin a gem, reduce score by 5.
+	 // If player has collision with enemy, reduce score by value of the gem carried.
+	 // If not carryin a gem, reduce score by gem value / 2.
      if (collide === true) {
 		if (hasGem === true) {
 			ctx.clearRect(0, 600, 500, 500);
-			score -= gemValue / 2;
+			score -= gemValue;
 			hasGem = false;
 		}
 		else {
-			score -= 5;
+			score -= gemValue / 2;
 		}
 		collide = false; 
 		gem.setGemLocation();
@@ -260,3 +260,10 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// Prevents the window from scrolling up and down when the arrow keys are pressed.
+window.addEventListener("keydown", function(e) {
+	if([38, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
