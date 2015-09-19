@@ -25,6 +25,16 @@ body {
         display: flex;
         text-align: left;
     }
+	
+	.large_window {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.small_window {
+		display: none;
+	}
 }
 
 /* changes the color of the navbar links when the mouse hovers */
@@ -32,38 +42,36 @@ body {
     color: #e64a19;
 }
 
-
-/* Content */
-h2 {
-    color: #795548;
-    padding-left: 15px;
-    font-weight: bold;
-}
-
 h3 {
     font-size: 35px;
     font-weight: bold;
 }
 
-.margin-top {
-    margin-top: 20px;
-}
-
 p {
     color: #795548;
     margin-top: 10px;
+	font-size: 20px;
+	line-height: 40px;
+}
+
+/* Changes the color of the text these classes are used on */
+.blue {
+	color: blue;
+	font-weight: bold;
+}
+
+.green {
+	color: green;
+	font-weight: bold;
+}
+
+.orange {
+	color: orange;
+	font-weight: bold;
 }
 
 a {
     color: inherit;
-}
-
-.btn:hover {
-    color: #e64a19;
-}
-
-.carousel-placeholder {
-    font-size: 30px;
 }
 
 /* Footer */

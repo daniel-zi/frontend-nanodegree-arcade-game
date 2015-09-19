@@ -4,9 +4,8 @@
 		<meta charset="UTF-8">
 		<title>Effective JavaScript: Frogger</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="zstylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="css/styles.css">
-		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=zocial">
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300">
 	</head>
@@ -39,14 +38,31 @@
                     <ul id="hover-color" class="nav navbar-nav">
                         <li><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/index.html">Home</a></li>
                         <li><a class="link-hover-color" href="http://ncaron.github.io/project2/">Resume</a></li>
-                        <li class="active"><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/all_projects.html">All Projects</a></li>
+                        <li><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/all_projects.html">All Projects</a></li>
                         <li><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/about-me.html">About Me</a></li>
+						<li class="active"><a class="link-hover-color" href="#">Frogger Clone</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
 		
 		<section class="text-center" id="frogger"></section>
+		
+		<section class="row">
+			<div class="col-md-6">
+				<h3>How to play</h3>
+				<p>Use the arrow keys to move your character, reach the water without colliding with an enemy to score points. After reaching the water, the values <span class="large_window">on the right</span><span class="small_window">below</span> are added to your score. Colliding with an enemy also decreases your score.</p>
+			</div>
+			<div class="col-md-6">
+				<h3>Scoring</h3>
+				<p>No gem is worth 1 point.</p>
+				<p>The <span class="blue">blue</span> gem is worth 20 points.</p>
+				<p>The <span class="green">green</span> gem is worth 50 points.</p>
+				<p>The <span class="orange">orange</span> gem is worth 100 points.</p>
+				<p>If you collide with an enemy while carrying a gem, your score decreases by the gem value.</p>
+				<p>If you collide with an enemy without carrying a gem, your score decreases by half of the gem value currently on screen.</p>
+			</div>
+		</section>
 		
 		<footer>
             <div class="row">
