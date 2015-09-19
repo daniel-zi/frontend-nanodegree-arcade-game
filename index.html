@@ -1,73 +1,97 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<title>Effective JavaScript: Frogger</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="css/styles.css">
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=zocial">
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300">
-	</head>
-	<body class="container">
-		<header class="row">
-            <div class="col-md-6">
-                <!-- TODO: Create a logo and update alt -->
-                <img class="img-responsive img-rounded title-logo" src="images/my_picture.jpeg" alt="My Logo">
+
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=zocial">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300">
+	<title>Frogger Clone</title>
+</head>
+
+<body class="container">
+    <header class="row">
+        <div class="col-md-6">
+            <!-- TODO: Create a logo and update alt -->
+            <img class="img-responsive img-rounded title-logo" src="images/my_picture.jpeg" alt="My Logo">
+        </div>
+
+        <div class="col-md-6 text-right text-uppercase">
+            <h1 class="title-super">Niko Caron</h1>
+            <h4>Front-end Apprentice</h4>
+        </div>
+    </header>
+
+    <!-- Navigation menu that turns into hamburger icon for mobile -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#hamburger" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
 
-            <div class="col-md-6 text-right text-uppercase">
-                <h1 class="title-super">Niko Caron</h1>
-                <h4>Front-end Apprentice</h4>
+            <div class="collapse navbar-collapse" id="hamburger">
+                <ul id="hover-color" class="nav navbar-nav">
+                    <li><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/index.html">Home</a>
+                    </li>
+                    <li><a class="link-hover-color" href="http://ncaron.github.io/project2/">Resume</a>
+                    </li>
+                    <li><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/all_projects.html">All Projects</a>
+                    </li>
+                    <li><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/about-me.html">About Me</a>
+                    </li>
+                    <li class="active"><a class="link-hover-color" href="#">Frogger Clone</a>
+                    </li>
+                </ul>
             </div>
-        </header>
-		
-		<!-- Navigation menu that turns into hamburger icon for mobile -->
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#hamburger" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
+        </div>
+    </nav>
 
-                <div class="collapse navbar-collapse" id="hamburger">
-                    <ul id="hover-color" class="nav navbar-nav">
-                        <li><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/index.html">Home</a></li>
-                        <li><a class="link-hover-color" href="http://ncaron.github.io/project2/">Resume</a></li>
-                        <li class="active"><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/all_projects.html">All Projects</a></li>
-                        <li><a class="link-hover-color" href="http://ncaron.github.io/Portfolio/about-me.html">About Me</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-		
-		<section class="text-center" id="frogger"></section>
-		
-		<footer>
-            <div class="row">
-                <div class="col-md-12">
-                    <hr>
-                </div>
-            </div>
+    <section class="text-center" id="frogger"></section>
 
-            <!-- TODO: add more links to other sites -->
-            <div class="row">
-                <div class="col-md-12">
-                    <a class="zocial-github" href="https://github.com/ncaron" target="_blank"></a>
-                </div>
+    <section class="row">
+        <div class="col-md-6">
+            <h3>How to play</h3>
+            <p>Use the arrow keys to move your character, reach the water without colliding with an enemy to score points. After reaching the water, the values <span class="large_window">on the right</span><span class="small_window">below</span> are added to your score. Colliding with an enemy also decreases your score.</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Scoring</h3>
+            <p>No gem is worth 1 point.</p>
+            <p>The <span class="blue">blue</span> gem is worth 20 points.</p>
+            <p>The <span class="green">green</span> gem is worth 50 points.</p>
+            <p>The <span class="orange">orange</span> gem is worth 100 points.</p>
+            <p>If you collide with an enemy while carrying a gem, your score decreases by the gem value.</p>
+            <p>If you collide with an enemy without carrying a gem, your score decreases by half of the gem value currently on screen.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
             </div>
-        </footer>
-		
-		<script src="js/jquery-2.1.4.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/resources.js"></script>
-		<script src="js/app.js"></script>
-		<script src="js/engine.js"></script>
-	</body>
+        </div>
+
+        <!-- TODO: add more links to other sites -->
+        <div class="row">
+            <div class="col-md-12">
+                <a class="zocial-github" href="https://github.com/ncaron" target="_blank"></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/resources.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/engine.js"></script>
+</body>
+
 </html>

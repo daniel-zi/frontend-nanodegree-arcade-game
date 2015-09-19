@@ -20,7 +20,7 @@ var Enemy = function(enemyX, enemyY, speed) {
 	 this.x = enemyX;
 	 this.y = enemyY;
 	 this.speed = speed;
-	 
+
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/small/enemy-bug.png';
@@ -33,19 +33,19 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 	 this.x += this.speed * dt;
-	 
+
 	 // Resets enemy with a new speed after it goes off canvas.
 	 if (this.x > 505) {
 		  this.x = -105;
 		  this.speedGenerator();
 	 }
-	
+
 	// Sets the edges of the enemy.
 	var enemyUp = this.y - 37;
 	var enemyDown = this.y + 37;
 	var enemyLeft = this.x - 50;
 	var enemyRight = this.x + 50;
-	
+
 	// Detects if the player character is touching any of the enemy edges.
     // Updates score and resets with updateScore() if it does.
 	if (player.y > enemyUp && player.y < enemyDown && player.x > enemyLeft && player.x < enemyRight) {
@@ -74,7 +74,7 @@ var playerY = 450;
 var Player = function() {
 	 this.x = playerX;
 	 this.y = playerY;
-	
+
 	 this.sprite = 'images/small/char-boy.png';
 };
 
@@ -85,7 +85,7 @@ Player.prototype.update = function() {
 // Draw the player on the screen.
 Player.prototype.render = function() {
 	 ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-   
+
      ctx.font = '30pt Courier New';
      ctx.fillStyle = 'orange';
      ctx.fillText('Score' + ' ' + score , 0, 30);
@@ -95,7 +95,7 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyDown) {
 	var moveVertical = 85;
 	var moveHorizontal = 100;
-	
+
 	// Moves the player character and makes sure it doesn't go out of bounds.
 	// If player moves up in the water, updates score and resets with updateScore().
 	// Change these values if another row or column is added to the game.
@@ -152,7 +152,7 @@ var Gem = function() {
 // Blue will apprea most often, then green, then orange.
 Gem.prototype.setGemLocation = function() {
 	var random = Math.floor(Math.random() * 100) + 1;
-	
+
 	if (random >= 60) {
 		this.sprite = 'images/small/Gem Blue.png';
 		this.x = (Math.floor(Math.random() * 5)) * 100 + 25;
@@ -180,7 +180,7 @@ Gem.prototype.update = function() {
 	var gemDown = this.y + 37;
 	var gemLeft = this.x - 50;
 	var gemRight = this.x + 50;
-	
+
 	// Detects if the player character is touching any of the gem edges.
 	if (player.y > gemUp && player.y < gemDown && player.x > gemLeft && player.x < gemRight) {
 	    hasGem = true;
@@ -230,23 +230,23 @@ function updateScore() {
 		up = false;
 		player.playerReset();
 	 }
-     
-	 // If player has collision with enemy, reduce score by half of the gem value carrying.
-	 // If not carryin a gem, reduce score by 5.
+
+	 // If player has collision with enemy, reduce score by value of the gem carried.
+	 // If not carryin a gem, reduce score by gem value / 2.
      if (collide === true) {
 		if (hasGem === true) {
 			ctx.clearRect(0, 600, 500, 500);
-			score -= gemValue / 2;
+			score -= gemValue;
 			hasGem = false;
 		}
 		else {
-			score -= 5;
+			score -= gemValue / 2;
 		}
-		collide = false; 
+		collide = false;
 		gem.setGemLocation();
 		player.playerReset();
 	 }
-};
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -260,3 +260,10 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// Prevents the window from scrolling up and down when the arrow keys are pressed.
+window.addEventListener("keydown", function(e) {
+	if([38, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
