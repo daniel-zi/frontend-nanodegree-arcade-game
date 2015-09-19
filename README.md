@@ -7,9 +7,9 @@ Avoid colliding with enemy bugs.
 
 SCORING
 ===============
-Blue gem value = 20
-Green gem value = 50
-Orange gem value = 100
+Blue gem value: 20
+Green gem value: 50
+Orange gem value: 100
 
 Reach the water and receive 1 point.
 Reach the water while carrying a gem, receive the gem value in points.
