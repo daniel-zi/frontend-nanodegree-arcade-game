@@ -1,3 +1,8 @@
+HOW TO RUN
+===============
+* Download all files necessary.
+* Open index.html in your browser.
+
 HOW TO PLAY
 ===============
 * Press the arrow keys to move your player.
